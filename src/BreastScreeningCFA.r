@@ -6,9 +6,14 @@ library(psych)
 library(tidySEM)
 
 #Read Data
-MadeiraSafeAgo <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
-#mydata <- MadeiraSafeAgo[c(21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47)]
-mydata <- MadeiraSafeAgo[c(23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49)]
+SimplePre <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
+mydata <- SimplePre[c(2,3,4,5,6,7,
+                      8,9,10,11,12,
+                      13,14,15,16,17,
+                      18,19,20,21,22,
+                      23,24,25,26,27,
+                      28,29,30,31,32,
+                      33,34,35,36,37)]
 
 #Check the data
 pairs.panels(mydata)
@@ -29,7 +34,7 @@ print(model1)
 
 cfa_model_3 <- ' #start of model
 # latent variable definitions (common factors)
-  ImpactCV =~ Q1+Q2+Q3+Q4+Q10
+  ImpactCV =~ Q2+Q3+Q4+Q10
   SafetyCV =~ Q5+Q6+Q7+Q8+Q9
   PerfExp =~ Q11+Q12
   EffExp =~ Q13+Q14
@@ -54,10 +59,10 @@ semPlot::semPaths(fit_cfa_3,"std", fade = F, residuals = F)
 
 graph_sem(model = fit_cfa_3)
 
-
+# Nao estou a conseguir correr este modelo...
 cfa_model_4 <- ' #start of model
 # latent variable definitions (common factors)
- ImpactCV =~ Q1+Q2+Q3+Q4+Q10
+  ImpactCV =~ Q2+Q3+Q4+Q10
   SafetyCV =~ Q5+Q6+Q7+Q8+Q9
   PerfExp =~ Q11+Q12
   EffExp =~ Q13+Q14

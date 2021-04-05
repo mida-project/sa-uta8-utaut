@@ -14,15 +14,19 @@ library(gridExtra) #for combining the two plots
 library(psych)
 library(ggplot2)
 library(corrplot) #plotting correlation matrices
-library(lavaan)  #for fitting structural equation models
-library(semPlot)  #for automatically making diagrams 
+library(lavaan) #for fitting structural equation models
+library(semPlot) #for automatically making diagrams 
 library(MVN)
 
 #Read Data
-#MadeiraSafeSet <- read_excel("Desktop/MadeiraSafeSet.xlsx")
-#mydata <- MadeiraSafeSet[c(27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59)]
 SimpleSet <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
-mydata <- SimpleSet[c(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37)]
+mydata <- SimpleSet[c(2,3,4,5,6,7,
+                      8,9,10,11,12,
+                      13,14,15,16,17,
+                      18,19,20,21,22,
+                      23,24,25,26,27,
+                      28,29,30,31,32,
+                      33,34,35,36,37)]
 
 #Check the data
 pairs.panels(mydata)
@@ -36,7 +40,7 @@ print(corMat)
 # entering raw data and extracting PCs 
 # from the correlation matrix 
 fit_PCA <- princomp(mydata, cor=TRUE)
-summary(fit_PCA) # print variance accounted for 
+summary(fit_PCA) # print variance accounted for
 loadings(fit_PCA) # pc loadings
 plot(fit_PCA,type="lines") # scree plot
 fit_PCA$scores # the principal components
@@ -45,13 +49,14 @@ biplot(fit_PCA)
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 6 factors, 
 # with varimax rotation 
-fit_ML <- factanal(mydata, 10, fm = "ml", rotation="promax", scores="regression")
+fit_ML <- factanal(mydata, 10, fm = "ml",
+                   rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
-MadeiraSafeAgo <- cbind(MadeiraSafeAgo, fit$scores)# plot factor 1 by factor 2
-loadings <- fit_ML$loadings[,1:7] 
-plot(load,type="n") # set up plot 
-text(load,labels=names(mydata),cex=.7) # add variable names
+SimplePre <- cbind(SimplePre, fit$scores)# plot factor 1 by factor 2
+loadings <- fit_ML$loadings[,1:6]
+#plot(load,type="n") # set up plot
+#text(load,labels=names(mydata),cex=.7) # add variable names
 
 # Determine Number of Factors to Extract
 ev <- eigen(cor(mydata)) # get eigenvalues
@@ -63,11 +68,13 @@ plotnScree(nS)
 
 #Visualize results
 
-loadings <- fit_ML$loadings[,1:7]
+loadings <- fit_ML$loadings[,1:6]
+
+# Duvida: porque 7 factores?
 
 loadings.m <- melt(loadings, id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3", 
-                             "Factor 4", "Factor 5", "Factor 6", "Factor 7"), 
+                             "Factor 4", "Factor 5", "Factor 6"),
                    variable.name="Factor", value.name="Loading")
 
 colnames(loadings.m)[1] <- "Test"
@@ -85,7 +92,8 @@ ggplot(loadings.m, aes(Test, abs(Loading), fill=Loading)) +
   theme_bw(base_size=10) #use a black-and-white theme with set font size
 
 corrs <- fit_ML$correlation
-corrs.m <- melt(corrs, id="Test", variable.name="Test2", value.name="Correlation")
+corrs.m <- melt(corrs, id="Test",
+                variable.name="Test2", value.name="Correlation")
 
 colnames(corrs.m)[1] <- "Test"
 colnames(corrs.m)[2] <- "Test2"
@@ -111,8 +119,10 @@ p1 <- ggplot(corrs.m, aes(Test2, Test, fill=abs(Correlation))) +
 p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) + 
   geom_bar(stat="identity") + coord_flip() + 
   ylab("Loading Strength") + theme_bw(base_size=10) + 
-  #remove labels and tweak margins for combining with the correlation matrix plot
+  #remove labels and tweak margins for combining with
+  # the correlation matrix plot
   theme(axis.text.y = element_blank(), 
         axis.title.y = element_blank(), 
         plot.margin = unit(c(3,1,39,-3), "mm"))
-grid.arrange(p1, p2, ncol=2, widths=c(2, 1)) #side-by-side, matrix gets more space
+#side-by-side, matrix gets more space
+grid.arrange(p1, p2, ncol=2, widths=c(2, 1))
