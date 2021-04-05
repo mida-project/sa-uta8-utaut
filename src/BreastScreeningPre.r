@@ -53,7 +53,8 @@ fit_ML <- factanal(mydata, 10, fm = "ml",
                    rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
-SimplePre <- cbind(SimplePre, fit$scores)# plot factor 1 by factor 2
+# Nao consegui por estas partes a funcionar...
+#SimplePre <- cbind(SimplePre, fit$scores)# plot factor 1 by factor 2
 loadings <- fit_ML$loadings[,1:6]
 #plot(load,type="n") # set up plot
 #text(load,labels=names(mydata),cex=.7) # add variable names
