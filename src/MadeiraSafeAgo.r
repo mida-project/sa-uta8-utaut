@@ -19,8 +19,10 @@ library(semPlot)  #for automatically making diagrams
 library(MVN)
 
 #Read Data
-MadeiraSafeSet <- read_excel("Desktop/MadeiraSafeSet.xlsx")
-mydata <- MadeiraSafeSet[c(27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59)]
+#MadeiraSafeSet <- read_excel("Desktop/MadeiraSafeSet.xlsx")
+#mydata <- MadeiraSafeSet[c(27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59)]
+SimpleSet <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
+mydata <- SimpleSet[c(2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37)]
 
 #Check the data
 pairs.panels(mydata)
@@ -35,8 +37,8 @@ print(corMat)
 # from the correlation matrix 
 fit_PCA <- princomp(mydata, cor=TRUE)
 summary(fit_PCA) # print variance accounted for 
-loadings(fit_PCA) # pc loadings 
-plot(fit_PCA,type="lines") # scree plot 
+loadings(fit_PCA) # pc loadings
+plot(fit_PCA,type="lines") # scree plot
 fit_PCA$scores # the principal components
 biplot(fit_PCA)
 
@@ -46,7 +48,7 @@ biplot(fit_PCA)
 fit_ML <- factanal(mydata, 10, fm = "ml", rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
-MadeiraSafeAgo <- cbind(MadeiraSafeAgo, fit$scores)# plot factor 1 by factor 2 
+MadeiraSafeAgo <- cbind(MadeiraSafeAgo, fit$scores)# plot factor 1 by factor 2
 loadings <- fit_ML$loadings[,1:7] 
 plot(load,type="n") # set up plot 
 text(load,labels=names(mydata),cex=.7) # add variable names
@@ -61,7 +63,7 @@ plotnScree(nS)
 
 #Visualize results
 
-loadings <- fit_ML$loadings[,1:7] 
+loadings <- fit_ML$loadings[,1:7]
 
 loadings.m <- melt(loadings, id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3", 
