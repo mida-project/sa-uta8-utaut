@@ -10,7 +10,6 @@ library(reshape2)
 library(grid) #for adjusting plot margins
 library(gridExtra) #for combining the two plots
 
-
 library(psych)
 library(ggplot2)
 library(corrplot) #plotting correlation matrices
@@ -48,7 +47,7 @@ biplot(fit_PCA)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 6 factors, 
-# with varimax rotation 
+# with varimax rotation
 fit_ML <- factanal(mydata, 10, fm = "ml",
                    rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
