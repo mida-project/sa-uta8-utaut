@@ -54,7 +54,7 @@ print(fit_ML, digits=2, cutoff=.3)
 
 # Nao consegui por estas partes a funcionar...
 #SimplePre <- cbind(SimplePre, fit$scores)# plot factor 1 by factor 2
-loadings <- fit_ML$loadings[,1:6]
+loadings <- fit_ML$loadings[,1:10]
 #plot(load,type="n") # set up plot
 #text(load,labels=names(mydata),cex=.7) # add variable names
 
@@ -68,14 +68,22 @@ plotnScree(nS)
 
 #Visualize results
 
-loadings <- fit_ML$loadings[,1:6]
+loadings <- fit_ML$loadings[,1:10]
 
 # Duvida: porque 7 factores?
 
 loadings.m <- melt(loadings, id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3", 
-                             "Factor 4", "Factor 5", "Factor 6"),
+                             "Factor 4", "Factor 5", "Factor 6",
+                             "Factor 7", "Factor 8", "Factor 9",
+                             "Factor 10"),
                    variable.name="Factor", value.name="Loading")
+
+# Nota, para os factores regular pelo p-value
+
+# fazer um plot do p-value para Factor 1, ..., Factor 10
+# retirar os melhores, F4, F5, F6.
+# para cada F da anterior ver a ocupaçao.
 
 colnames(loadings.m)[1] <- "Test"
 colnames(loadings.m)[2] <- "Factor"
