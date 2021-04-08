@@ -1,0 +1,63 @@
+Call:
+factanal(x = mydata, factors = 2, scores = "regression", rotation = "promax",     fm = "ml")
+
+Uniquenesses:
+  Q2   Q3   Q4   Q5   Q6   Q7   Q8   Q9  Q10  Q11  Q12  Q13  Q14  Q15  Q16  Q17 
+0.84 0.91 0.97 0.38 0.40 0.72 0.26 0.37 0.37 0.42 0.39 0.31 0.42 0.41 0.70 0.66 
+ Q18  Q19  Q20  Q21  Q22  Q23  Q24  Q25  Q26  Q27  Q28  Q29  Q30  Q31  Q32  Q33 
+0.49 0.61 0.64 0.55 0.31 0.26 0.28 0.29 0.36 0.34 0.68 0.70 0.37 0.66 0.96 0.95 
+ Q34  Q35  Q36  Q37 
+0.96 0.78 0.76 0.83 
+
+Loadings:
+    Factor1 Factor2
+Q2          -0.44  
+Q3   0.33          
+Q4                 
+Q5           0.70  
+Q6           0.85  
+Q7           0.31  
+Q8           0.85  
+Q9           0.64  
+Q10  0.49    0.40  
+Q11  0.76          
+Q12  0.71          
+Q13  0.62    0.30  
+Q14  0.60          
+Q15  0.64          
+Q16  0.52          
+Q17  0.69          
+Q18  0.82          
+Q19  0.74          
+Q20  0.71          
+Q21  0.76          
+Q22  0.78          
+Q23  0.81          
+Q24  0.72          
+Q25  0.74          
+Q26  0.36    0.52  
+Q27  0.34    0.56  
+Q28  0.44          
+Q29  0.35          
+Q30  0.46    0.43  
+Q31  0.38          
+Q32                
+Q33                
+Q34                
+Q35                
+Q36  0.39          
+Q37  0.33          
+
+               Factor1 Factor2
+SS loadings       9.49    4.59
+Proportion Var    0.26    0.13
+Cumulative Var    0.26    0.39
+
+Factor Correlations:
+        Factor1 Factor2
+Factor1    1.00   -0.59
+Factor2   -0.59    1.00
+
+Test of the hypothesis that 2 factors are sufficient.
+The chi square statistic is 1853.8 on 559 degrees of freedom.
+The p-value is 2.36e-138 

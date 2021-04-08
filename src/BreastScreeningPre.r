@@ -18,8 +18,8 @@ library(semPlot) #for automatically making diagrams
 library(MVN)
 
 #Read Data
-SimpleSet <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
-mydata <- SimpleSet[c(2,3,4,5,6,7,
+SimplePlm <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
+mydata <- SimplePlm[c(2,3,4,5,6,7,
                       8,9,10,11,12,
                       13,14,15,16,17,
                       18,19,20,21,22,
@@ -46,15 +46,15 @@ fit_PCA$scores # the principal components
 biplot(fit_PCA)
 
 # Maximum Likelihood Factor Analysis
-# entering raw data and extracting 6 factors, 
+# entering raw data and extracting 10 factors, 
 # with varimax rotation
 fit_ML <- factanal(mydata, 10, fm = "ml",
                    rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
 # Nao consegui por estas partes a funcionar...
-#SimplePre <- cbind(SimplePre, fit$scores)# plot factor 1 by factor 2
-loadings <- fit_ML$loadings[,1:10]
+#SimplePlm <- cbind(SimplePlm, fit$scores)# plot factor 1 by factor 2
+loadings <- fit_ML$loadings[,1:6]
 #plot(load,type="n") # set up plot
 #text(load,labels=names(mydata),cex=.7) # add variable names
 
@@ -65,18 +65,15 @@ ap <- parallel(subject=nrow(mydata),var=ncol(mydata),
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
 
-
 #Visualize results
 
-loadings <- fit_ML$loadings[,1:10]
+loadings <- fit_ML$loadings[,1:6]
 
 # Duvida: porque 7 factores?
 
 loadings.m <- melt(loadings, id="", 
-                   measure=c("Factor 1", "Factor 2", "Factor 3", 
-                             "Factor 4", "Factor 5", "Factor 6",
-                             "Factor 7", "Factor 8", "Factor 9",
-                             "Factor 10"),
+                   measure=c("Factor 1", "Factor 2", "Factor 3",
+                             "Factor 4", "Factor 5", "Factor 6"),
                    variable.name="Factor", value.name="Loading")
 
 # Nota, para os factores regular pelo p-value
