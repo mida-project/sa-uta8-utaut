@@ -73,7 +73,7 @@ cfa_model_4 <- ' #start of model
   Privacy =~ Q24+Q25
   Trust =~ Q26+Q27
 # regressions
-  F
+# F
   SafetyCV ~ ImpactCV
   SocInf ~ Trust
   Security ~ Privacy
