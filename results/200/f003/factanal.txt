@@ -1,0 +1,64 @@
+Call:
+factanal(x = mydata, factors = 3, scores = "regression", rotation = "promax",     fm = "ml")
+
+Uniquenesses:
+  Q2   Q3   Q4   Q5   Q6   Q7   Q8   Q9  Q10  Q11  Q12  Q13  Q14  Q15  Q16  Q17 
+0.80 0.89 0.93 0.44 0.42 0.69 0.30 0.36 0.38 0.49 0.48 0.40 0.45 0.41 0.73 0.68 
+ Q18  Q19  Q20  Q21  Q22  Q23  Q24  Q25  Q26  Q27  Q28  Q29  Q30  Q31  Q32  Q33 
+0.56 0.64 0.64 0.54 0.27 0.23 0.26 0.28 0.41 0.42 0.74 0.62 0.37 0.64 0.94 0.96 
+ Q34  Q35  Q36  Q37 
+0.94 0.42 0.30 0.25 
+
+Loadings:
+    Factor1 Factor2 Factor3
+Q2          -0.48          
+Q3   0.35                  
+Q4                         
+Q5           0.64          
+Q6           0.79          
+Q7   0.41    0.32          
+Q8           0.80          
+Q9   0.33    0.64          
+Q10  0.46    0.42          
+Q11  0.69                  
+Q12  0.66                  
+Q13  0.60                  
+Q14  0.64                  
+Q15  0.62                  
+Q16  0.48                  
+Q17  0.58                  
+Q18  0.77                  
+Q19  0.72                  
+Q20  0.73                  
+Q21  0.74                  
+Q22  0.86                  
+Q23  0.84                  
+Q24  0.77                  
+Q25  0.75                  
+Q26          0.43    0.32  
+Q27          0.42    0.36  
+Q28  0.30                  
+Q29                  0.42  
+Q30  0.31    0.32    0.33  
+Q31                  0.32  
+Q32         -0.30          
+Q33                        
+Q34                        
+Q35                  0.79  
+Q36                  0.91  
+Q37                  1.00  
+
+               Factor1 Factor2 Factor3
+SS loadings       8.44    3.91    3.28
+Proportion Var    0.23    0.11    0.09
+Cumulative Var    0.23    0.34    0.43
+
+Factor Correlations:
+        Factor1 Factor2 Factor3
+Factor1    1.00   -0.57    0.57
+Factor2   -0.57    1.00   -0.52
+Factor3    0.57   -0.52    1.00
+
+Test of the hypothesis that 3 factors are sufficient.
+The chi square statistic is 1760.24 on 525 degrees of freedom.
+The p-value is 5.14e-133

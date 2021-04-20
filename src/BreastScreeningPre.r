@@ -54,7 +54,7 @@ print(fit_ML, digits=2, cutoff=.3)
 
 # Nao consegui por estas partes a funcionar...
 #SimplePlm <- cbind(SimplePlm, fit$scores)# plot factor 1 by factor 2
-loadings <- fit_ML$loadings[,1:6]
+loadings <- fit_ML$loadings[,1:10]
 #plot(load,type="n") # set up plot
 #text(load,labels=names(mydata),cex=.7) # add variable names
 
