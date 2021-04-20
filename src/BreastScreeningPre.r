@@ -18,7 +18,7 @@ library(semPlot) #for automatically making diagrams
 library(MVN)
 
 #Read Data
-SimplePlm <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple.xlsx")
+SimplePlm <- read_excel("/Users/francisco/Git/sa-uta8-utaut/data/simple_200.xlsx")
 mydata <- SimplePlm[c(2,3,4,5,6,7,
                       8,9,10,11,12,
                       13,14,15,16,17,
