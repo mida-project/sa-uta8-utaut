@@ -52,7 +52,7 @@ fit_ML <- factanal(mydata, 10, fm = "ml",
                    rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
-# Nao consegui por estas partes a funcionar...
+# Can not run the following parts:
 #SimplePlm <- cbind(SimplePlm, fit$scores)# plot factor 1 by factor 2
 loadings <- fit_ML$loadings[,1:10]
 #plot(load,type="n") # set up plot
@@ -65,22 +65,22 @@ ap <- parallel(subject=nrow(mydata),var=ncol(mydata),
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
 
-#Visualize results
+# Visualize results
 
 loadings <- fit_ML$loadings[,1:6]
 
-# Duvida: porque 7 factores?
+# Quetion: why 7 factors?
 
 loadings.m <- melt(loadings, id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6"),
                    variable.name="Factor", value.name="Loading")
 
-# Nota, para os factores regular pelo p-value
-
-# fazer um plot do p-value para Factor 1, ..., Factor 10
-# retirar os melhores, F4, F5, F6.
-# para cada F da anterior ver a ocupaçao.
+# Note: for each factor, try to regulate from the p-value.
+# just do the plot of the p-value for each Factor 1, ..., Factor 10
+# extract the best ones, F4, F5, F6.
+# For each F of the previous Factor, try to observe the engagement
+# of each variable.
 
 colnames(loadings.m)[1] <- "Test"
 colnames(loadings.m)[2] <- "Factor"
