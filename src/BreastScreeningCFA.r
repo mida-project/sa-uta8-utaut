@@ -59,7 +59,6 @@ semPlot::semPaths(fit_cfa_3,"std", fade = F, residuals = F)
 
 graph_sem(model = fit_cfa_3)
 
-# Can not run this model...
 cfa_model_4 <- ' #start of model
 # latent variable definitions (common factors)
   ImpactCV =~ Q2+Q3+Q4+Q10
