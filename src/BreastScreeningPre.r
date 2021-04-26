@@ -17,15 +17,17 @@ library(lavaan) #for fitting structural equation models
 library(semPlot) #for automatically making diagrams 
 library(MVN)
 
+# alterar a lista para correr da 10 a 37...
+# tentar introd. um novo factor com os loadings maiores
 #Read Data
 SimplePlm <- read_excel("../data/simple_200.xlsx")
-mydata <- SimplePlm[c(2,3,4,5,6,7,
-                      8,9,10,11,12,
-                      13,14,15,16,17,
-                      18,19,20,21,22,
-                      23,24,25,26,27,
-                      28,29,30,31,32,
-                      33,34,35,36,37)]
+mydata <- SimplePlm[c(10,11,12,13,
+                      14,15,16,17,
+                      18,19,20,21,
+                      22,23,24,25,
+                      26,27,28,29,
+                      30,31,32,33,
+                      34,35,36,37)]
 
 #Check the data
 pairs.panels(mydata)
@@ -67,14 +69,18 @@ plotnScree(nS)
 
 # Visualize results
 
-loadings <- fit_ML$loadings[,1:6]
+loadings <- fit_ML$loadings[,1:10]
 
 # Quetion: why 7 factors?
 
 loadings.m <- melt(loadings, id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
-                             "Factor 4", "Factor 5", "Factor 6"),
+                             "Factor 4", "Factor 5", "Factor 6",
+                             "Factor 7", "Factor 8", "Factor 9",
+                             "Factor 10"),
                    variable.name="Factor", value.name="Loading")
+
+# encontrar alguem que tenha escrito sobre a UTAUT a fundamentar a Exp.
 
 # Note: for each factor, try to regulate from the p-value.
 # just do the plot of the p-value for each Factor 1, ..., Factor 10

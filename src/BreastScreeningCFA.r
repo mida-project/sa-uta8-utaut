@@ -7,13 +7,13 @@ library(tidySEM)
 
 #Read Data
 SimplePre <- read_excel("../data/simple_200.xlsx")
-mydata <- SimplePre[c(2,3,4,5,6,7,
-                      8,9,10,11,12,
-                      13,14,15,16,17,
-                      18,19,20,21,22,
-                      23,24,25,26,27,
-                      28,29,30,31,32,
-                      33,34,35,36,37)]
+mydata <- SimplePre[c(10,11,12,13,
+                      14,15,16,17,
+                      18,19,20,21,
+                      22,23,24,25,
+                      26,27,28,29,
+                      30,31,32,33,
+                      34,35,36,37)]
 
 #Check the data
 pairs.panels(mydata)
@@ -31,7 +31,9 @@ model1 <- convert_efa_to_cfa(fit_efa, threshold = 0.3)
 print(model1)
 
 #CFA Model
-
+# ver com cuidado de novo os factores...
+# correr tudo sem as primeiras 10s
+# 5 a 9 sao Exp. pode ser um factor
 cfa_model_3 <- ' #start of model
 # latent variable definitions (common factors)
   ImpactCV =~ Q2+Q3+Q4+Q10
