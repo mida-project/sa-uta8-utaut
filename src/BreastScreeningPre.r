@@ -10,11 +10,10 @@ library(reshape2)
 library(grid) #for adjusting plot margins
 library(gridExtra) #for combining the two plots
 
-library(psych)
 library(ggplot2)
 library(corrplot) #plotting correlation matrices
 library(lavaan) #for fitting structural equation models
-library(semPlot) #for automatically making diagrams 
+library(semPlot) #for automatically making diagrams
 library(MVN)
 
 # alterar a lista para correr da 10 a 37...
@@ -69,16 +68,17 @@ plotnScree(nS)
 
 # Visualize results
 
-loadings <- fit_ML$loadings[,1:10]
+loadings <- fit_ML$loadings[,1:7]
 
 # Quetion: why 7 factors?
 
-loadings.m <- melt(loadings, id="", 
+loadings.m <- melt(loadings,
+                   id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6",
-                             "Factor 7", "Factor 8", "Factor 9",
-                             "Factor 10"),
-                   variable.name="Factor", value.name="Loading")
+                             "Factor 7"),
+                   variable.name="Factor",
+                   value.name="Loading")
 
 # encontrar alguem que tenha escrito sobre a UTAUT a fundamentar a Exp.
 

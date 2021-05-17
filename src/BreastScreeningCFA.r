@@ -27,6 +27,7 @@ print(corMat)
 fit_efa <- fa(mydata,10,fm="ml" ,rotate="oblimin")
 print(fit_efa, digits=2, cutoff=.3)
 
+# NOTA: isto nao esta a bater certo com o meu mapeamento...
 model1 <- convert_efa_to_cfa(fit_efa, threshold = 0.3)
 print(model1)
 
@@ -36,23 +37,20 @@ print(model1)
 # 5 a 9 sao Exp. pode ser um factor
 cfa_model_3 <- ' #start of model
 # latent variable definitions (common factors)
-  ImpactCV =~ Q2+Q3+Q4+Q10
-  SafetyCV =~ Q5+Q6+Q7+Q8+Q9
-  PerfExp =~ Q11+Q12
-  EffExp =~ Q13+Q14
-  SocInf =~ Q15+Q16
-  FacCond =~ Q17+Q18
-  IntUse =~ Q19+Q20
-  Security =~ Q21+Q22+Q23
-  Privacy =~ Q24+Q25
-  Trust =~ Q26+Q27
+  PerfExp =~ Q10+Q11+Q12
+  EffExp =~ Q13+Q14+Q15
+  SocInf =~ Q16+Q17+Q18
+  FacCond =~ Q19+Q20+Q21
+  IntUse =~ Q22+Q23+Q24+Q25+Q26+Q27+Q28
+  Security =~ Q30+Q31
+  Privacy =~ Q32+Q33+Q34+Q35
+  Trust =~ Q29+Q36+Q37
 # regressions
-  SafetyCV ~ ImpactCV
   SocInf ~ Trust
   Security ~ Privacy
-  Trust ~ ImpactCV + Privacy + Security
+  Trust ~ Privacy + Security
   PerfExp ~ SocInf + EffExp + Privacy + Trust
-  IntUse ~ PerfExp + SocInf + SafetyCV + FacCond + Security
+  IntUse ~ PerfExp + SocInf + FacCond + Security
 ' #end of model
 
 fit_cfa_3 <- cfa(cfa_model_3, data=mydata)
