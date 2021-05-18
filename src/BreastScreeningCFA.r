@@ -39,12 +39,13 @@ cfa_model_3 <- ' #start of model
 # latent variable definitions (common factors)
   PerfExp =~ Q10+Q11+Q12
   EffExp =~ Q13+Q14+Q15
-  SocInf =~ Q16+Q17+Q18
+  SocInf =~ Q16+Q17+Q18+Q25
   FacCond =~ Q19+Q20+Q21
-  IntUse =~ Q22+Q23+Q24+Q25+Q26+Q27+Q28
+  IntUse =~ Q22+Q23+Q24+Q28
+  Att =~ Q26+Q27
   Security =~ Q30+Q31
-  Privacy =~ Q32+Q33+Q34+Q35
-  Trust =~ Q29+Q36+Q37
+  Privacy =~ Q32+Q33+Q34
+  Trust =~ Q29+Q35+Q36+Q37
 # regressions
   SocInf ~ Trust
   Security ~ Privacy
