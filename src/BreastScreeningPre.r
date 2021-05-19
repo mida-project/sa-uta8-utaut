@@ -41,6 +41,7 @@ print(corMat)
 # from the correlation matrix 
 fit_PCA <- princomp(mydata, cor=TRUE)
 summary(fit_PCA) # print variance accounted for
+plot(fit_PCA) # plot the PCA
 loadings(fit_PCA) # pc loadings
 plot(fit_PCA,type="lines") # scree plot
 fit_PCA$scores # the principal components
