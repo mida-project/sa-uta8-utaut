@@ -36,10 +36,18 @@ corPlot(mydata)
 corMat <- cor(mydata)
 print(corMat)
 
-# Pricipal Components Analysis
+# Pricipal Components Analysis (PCA)
 # entering raw data and extracting PCs 
-# from the correlation matrix 
+# from the correlation matrix
+# We run a PCA to determine the number
+# of facors.
 fit_PCA <- princomp(mydata, cor=TRUE)
+# The summary purpose is to see exactly
+# which components might be intersting.
+# In this case, we want to look at the
+# "Proportion of Variance" and try to
+# understand how much percentage each
+# component is explaining of the variance.
 summary(fit_PCA) # print variance accounted for
 plot(fit_PCA) # plot the PCA
 loadings(fit_PCA) # pc loadings
@@ -47,29 +55,75 @@ plot(fit_PCA,type="lines") # scree plot
 fit_PCA$scores # the principal components
 biplot(fit_PCA)
 
+##################################################
+# TESTING START
+##################################################
+# Based on the summary it appears 3 components
+# (i.e., Variances >= 2) exist.
+# However, the next analysis should have the
+# factor loadings > 0.50 for acceptance.
+# factanal requires...
+# dataset: simple_200
+# factors: 3
+# rotation: varimax (default)
+fit_t001 <- factanal(mydata, 3,
+                     rotation="promax")
+print(fit_t001, digits=2, cutoff=.3)
+
+# Run this again with 2 factors to see if this
+# is sufficient.
+fit_t002 <- factanal(mydata, 2,
+                     rotation="promax")
+print(fit_t002, digits=2, cutoff=.3)
+
+# Try hard with more factors to see if we can
+# increase the number of factors.
+fit_t003 <- factanal(mydata, 7,
+                     rotation="promax")
+print(fit_t003, digits=2, cutoff=.3)
+
+# Although the summary results are
+# representing 3 components, the factor
+# loadings > 0.50 can be represented by
+# 8 components. Thus, it seems that we can
+# represent our EFA with 8 components instead
+# of only 3 components.
+fit_t004 <- factanal(mydata, 8,
+                     rotation="promax")
+print(fit_t004, digits=2, cutoff=.3)
+
+fit_t005 <- factanal(mydata,
+                     8,
+                     rotation="varimax",
+                     scores="regression")
+head(fit_t005$scores)
+
+##################################################
+# TESTING END
+##################################################
+
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 10 factors, 
-# with varimax rotation
+# with promax rotation
 fit_ML <- factanal(mydata, 10, fm = "ml",
                    rotation="promax", scores="regression")
 print(fit_ML, digits=2, cutoff=.3)
 
-# Can not run the following parts:
-#SimplePlm <- cbind(SimplePlm, fit$scores)# plot factor 1 by factor 2
+SimplePlm <- cbind(SimplePlm, fit_ML$scores)# plot factor 1 by factor 2
 loadings <- fit_ML$loadings[,1:10]
-#plot(load,type="n") # set up plot
-#text(load,labels=names(mydata),cex=.7) # add variable names
+plot(loadings,type="n") # set up plot
+text(loadings,labels=names(mydata),cex=.7) # add variable names
 
 # Determine Number of Factors to Extract
 ev <- eigen(cor(mydata)) # get eigenvalues
 ap <- parallel(subject=nrow(mydata),var=ncol(mydata),
-               rep=100,cent=.05)
+               rep=100,cent=0.05)
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
 
 # Visualize results
 
-loadings <- fit_ML$loadings[,1:7]
+loadings <- fit_ML$loadings[,1:8]
 
 # Quetion: why 7 factors?
 
@@ -77,7 +131,7 @@ loadings.m <- melt(loadings,
                    id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6",
-                             "Factor 7"),
+                             "Factor 7", "Factor 8"),
                    variable.name="Factor",
                    value.name="Loading")
 
