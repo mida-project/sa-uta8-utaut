@@ -88,12 +88,14 @@ print(fit_t003, digits=2, cutoff=.3)
 # 8 components. Thus, it seems that we can
 # represent our EFA with 8 components instead
 # of only 3 components.
-fit_t004 <- factanal(mydata, 8,
+fit_t004 <- factanal(mydata,
+                     8,
                      rotation="promax")
 print(fit_t004, digits=2, cutoff=.3)
 
+# FAIL
 fit_t005 <- factanal(mydata,
-                     8,
+                     9,
                      rotation="varimax",
                      scores="regression")
 head(fit_t005$scores)
@@ -123,7 +125,7 @@ plotnScree(nS)
 
 # Visualize results
 
-loadings <- fit_ML$loadings[,1:8]
+loadings <- fit_ML$loadings[,1:7]
 
 # Quetion: why 7 factors?
 
@@ -131,7 +133,7 @@ loadings.m <- melt(loadings,
                    id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6",
-                             "Factor 7", "Factor 8"),
+                             "Factor 7"),
                    variable.name="Factor",
                    value.name="Loading")
 
@@ -187,8 +189,8 @@ p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) +
   ylab("Loading Strength") + theme_bw(base_size=10) + 
   #remove labels and tweak margins for combining with
   # the correlation matrix plot
-  theme(axis.text.y = element_blank(), 
-        axis.title.y = element_blank(), 
+  theme(axis.text.y = element_blank(),
+        axis.title.y = element_blank(),
         plot.margin = unit(c(3,1,39,-3), "mm"))
 #side-by-side, matrix gets more space
 grid.arrange(p1, p2, ncol=2, widths=c(2, 1))
