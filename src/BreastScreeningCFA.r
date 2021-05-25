@@ -30,38 +30,42 @@ print(fit_efa, digits=2, cutoff=.3)
 model1 <- convert_efa_to_cfa(fit_efa, threshold = 0.3)
 print(model1)
 
-# 10
-ML3 =~ Q18 + Q22 + Q23 + Q24 + Q25
-ML4 =~ Q35 + Q36 + Q37
-ML5 =~ Q32 + Q33 + Q34
-ML1 =~ Q11 + Q12
-ML9 =~ Q26 + Q27 + Q28 + Q30 + Q31
-ML7 =~ Q13 + Q14 + Q15
-ML8 =~ Q16 + Q17 + Q18 + Q19 + Q21
-ML2 =~ Q19 + Q20
-ML6 =~ Q28 + Q29 + Q30
+##################################################
+# TESTING START
+##################################################
+#CFA Model
+cfa_model_1 <- ' #start of model
+# latent variable definitions (common factors)
+  PerfExp =~ Q10 + Q11 + Q12
+  EffExp =~ Q13 + Q14 + Q15
+  SocInf =~ Q16 + Q17 + Q18
+  FacCond =~ Q19 + Q20 + Q21
+  IntUse =~ Q22 + Q23 + Q24
+  Attitude =~ Q26 + Q27 + Q28
+  Security =~ Q30 + Q31
+  Privacy =~ Q32 + Q33 + Q34
+  Trust =~ Q29 + Q35 + Q36 + Q37
+' #end of model
 
-# 8
-ML2 =~ Q10 + Q22 + Q23 + Q24 + Q25
-ML6 =~ Q26 + Q27 + Q28 + Q29 + Q30 + Q31
-ML3 =~ Q35 + Q36 + Q37
-ML5 =~ Q32 + Q33 + Q34
-ML4 =~ Q11 + Q12
-ML7 =~ Q13 + Q14 + Q15
-ML8 =~ Q16 + Q17 + Q18 + Q19 + Q21
-ML1 =~ Q19 + Q20
+fit_cfa_1 <- cfa(cfa_model_1, data=mydata)
+summary(fit_cfa_1, fit.measures=TRUE, standardized=TRUE)
+
+##################################################
+# TESTING END
+##################################################
 
 #CFA Model
 cfa_model_3 <- ' #start of model
 # latent variable definitions (common factors)
-  PerfExp =~ Q11+Q12
-  EffExp =~ Q13+Q14+Q15
-  SocInf =~ Q16+Q17+Q18
-  FacCond =~ Q19+Q20
-  IntUse =~ Q13+Q14+Q15
-  Security =~ Q26+Q27+Q28+Q30+Q31
-  Privacy =~ Q32+Q33+Q34
-  Trust =~ Q35+Q36+Q37
+  PerfExp =~ Q10 + Q11 + Q12
+  EffExp =~ Q13 + Q14 + Q15
+  SocInf =~ Q16 + Q17 + Q18
+  FacCond =~ Q19 + Q20 + Q21
+  IntUse =~ Q22 + Q23 + Q24
+  Attitude =~ Q26 + Q27 + Q28
+  Security =~ Q30 + Q31
+  Privacy =~ Q32 + Q33 + Q34
+  Trust =~ Q29 + Q35 + Q36 + Q37
 # regressions
   SocInf ~ Trust
   Security ~ Privacy

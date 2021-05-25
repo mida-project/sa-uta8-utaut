@@ -56,6 +56,20 @@ fit_PCA$scores # the principal components
 biplot(fit_PCA)
 
 ##################################################
+# PARALLEL ANALYSIS 2
+##################################################
+
+# parallel analysis -> number of factors
+pfa = fa.parallel(mydata, fm="ml", fa="fa")
+
+# eigenvalues (kaiser) -> how many over ~0.50?
+pfa$fa.values
+
+##################################################
+# PARALLEL END
+##################################################
+
+##################################################
 # TESTING START
 ##################################################
 # Based on the summary it appears 3 components
@@ -93,12 +107,13 @@ fit_t004 <- factanal(mydata,
                      rotation="promax")
 print(fit_t004, digits=2, cutoff=.3)
 
-# FAIL
+# FAIL -> some loadings are < 0.50
 fit_t005 <- factanal(mydata,
                      9,
                      rotation="varimax",
                      scores="regression")
 head(fit_t005$scores)
+print(fit_t005, digits=2, cutoff=.3)
 
 ##################################################
 # TESTING END
