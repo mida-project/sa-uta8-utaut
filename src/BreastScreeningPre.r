@@ -19,7 +19,7 @@ library(MVN)
 # alterar a lista para correr da 10 a 37...
 # tentar introd. um novo factor com os loadings maiores
 #Read Data
-SimplePlm <- read_excel("../data/simple_200.xlsx")
+SimplePlm <- read_excel("~/Git/sa-uta8-utaut/data/simple_200.xlsx")
 mydata <- SimplePlm[c(10,11,12,13,
                       14,15,16,17,
                       18,19,20,21,

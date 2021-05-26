@@ -6,7 +6,7 @@ library(psych)
 library(tidySEM)
 
 #Read Data
-SimplePre <- read_excel("../data/simple_200.xlsx")
+SimplePre <- read_excel("~/Git/sa-uta8-utaut/data/simple_200.xlsx")
 mydata <- SimplePre[c(10,11,12,13,
                       14,15,16,17,
                       18,19,20,21,
@@ -29,7 +29,7 @@ print(corMat)
 # have divergence validity problem.
 
 # Run the Factor Analsis
-fit_efa <- fa(mydata, 7, fm="ml", rotate="oblimin")
+fit_efa <- fa(mydata, 8, fm="ml", rotate="oblimin")
 print(fit_efa, digits=2, cutoff=.3)
 
 model1 <- convert_efa_to_cfa(fit_efa, threshold = 0.3)
@@ -45,11 +45,16 @@ print(model1)
 # theory and literature.
 # The symbol =~ stands for construct.
 
+# GOALS:
+# Factor Loadings > 0.708
+# CFI, TLI > 0.90
+# RMSA, SRMR < 0.08
+
 # TODO
 # Factors from literature = 10
 cfa_model_0 <- ' #start of model
 # latent variable definitions (common factors)
-  Impact =~
+  Impact =~ Q10
   PerfExp =~ Q10 + Q11 + Q12
   EffExp =~ Q13 + Q14 + Q15
   SocInf =~ Q16 + Q17 + Q18
@@ -61,8 +66,10 @@ cfa_model_0 <- ' #start of model
   Trust =~ Q29 + Q35 + Q36 + Q37
 ' #end of model
 
-fit_cfa_0 <- cfa(cfa_model_0, data=mydata, estimator="MLR", mimic="Mplus")
+# FAIL: could not compute...
+fit_cfa_0 <- cfa(cfa_model_0, data=mydata, estimator="ML", mimic="Mplus")
 summary(fit_cfa_0, fit.measures=TRUE, standardized=TRUE)
+pred0 <- predict(fit_cfa_0)
 
 # Factors from literature = 9
 cfa_model_1 <- ' #start of model
@@ -79,7 +86,13 @@ cfa_model_1 <- ' #start of model
 ' #end of model
 
 fit_cfa_1 <- cfa(cfa_model_1, data=mydata, estimator="MLR", mimic="Mplus")
-summary(fit_cfa_1, fit.measures=TRUE, standardized=TRUE)
+summary(fit_cfa_1, fit.measures=TRUE, standardized=TRUE, rsq=TRUE)
+pred1 <- predict(fit_cfa_1)
+
+# PROBLEM:
+# Comparative Fit Index (CFI)                    0.885       0.884
+# Tucker-Lewis Index (TLI)                       0.862       0.861
+# Item problems (Std.all > 0.6): Q16, Q28, Q29
 
 # Factors from literature = 8
 cfa_model_2 <- ' #start of model
@@ -94,7 +107,7 @@ cfa_model_2 <- ' #start of model
   Trust =~ Q29 + Q35 + Q36 + Q37
 ' #end of model
 
-# Latent variables = 8 (ordered by factor number)
+# Latent variables = 8 (ordered by outputted factor number)
 # ML1 =~ Q19 + Q20
 # ML2 =~ Q10 + Q22 + Q23 + Q24 + Q25
 # ML3 =~ Q35 + Q36 + Q37
@@ -106,6 +119,11 @@ cfa_model_2 <- ' #start of model
 
 fit_cfa_2 <- cfa(cfa_model_2, data=mydata, estimator="MLR", mimic="Mplus")
 summary(fit_cfa_2, fit.measures=TRUE, standardized=TRUE)
+pred2 <- predict(fit_cfa_2)
+
+# PROBLEM:
+# Comparative Fit Index (CFI)                    0.838       0.830
+# Tucker-Lewis Index (TLI)                       0.809       0.801
 
 ##################################################
 # TESTING END
