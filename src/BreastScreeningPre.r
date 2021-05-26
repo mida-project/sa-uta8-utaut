@@ -107,6 +107,14 @@ fit_t004 <- factanal(mydata,
                      rotation="promax")
 print(fit_t004, digits=2, cutoff=.3)
 
+# RMSA < 0.08
+# Tucker Lewis Index < 0.99
+# If actor correlations are > 0.70 then we will
+# have divergence validity problem.
+fa_f008 <- fa(mydata, nfactors=8, rotate="oblimin", fm="ml")
+summary(fa_f008)
+print(fa_f008, digits=2, cutoff=.3, sort=TRUE)
+
 # FAIL -> some loadings are < 0.50
 fit_t005 <- factanal(mydata,
                      9,
@@ -139,20 +147,14 @@ nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
 
 # Visualize results
-
-loadings <- fit_ML$loadings[,1:7]
-
-# Quetion: why 7 factors?
-
+loadings <- fit_ML$loadings[,1:8]
 loadings.m <- melt(loadings,
                    id="", 
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6",
-                             "Factor 7"),
+                             "Factor 7", "Factor 8"),
                    variable.name="Factor",
                    value.name="Loading")
-
-# encontrar alguem que tenha escrito sobre a UTAUT a fundamentar a Exp.
 
 # Note: for each factor, try to regulate from the p-value.
 # just do the plot of the p-value for each Factor 1, ..., Factor 10

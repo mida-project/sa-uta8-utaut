@@ -33,7 +33,11 @@ print(model1)
 ##################################################
 # TESTING START
 ##################################################
-#CFA Model
+# CFA Model
+# Now, we have to define a model. We have all of
+# our factors and all of our items. The model is
+# not in our dataset, is something we create from
+# theory and literature.
 cfa_model_1 <- ' #start of model
 # latent variable definitions (common factors)
   PerfExp =~ Q10 + Q11 + Q12
