@@ -88,6 +88,8 @@ cfa_model_1 <- ' #start of model
 fit_cfa_1 <- cfa(cfa_model_1, data=mydata, estimator="MLR", mimic="Mplus")
 summary(fit_cfa_1, fit.measures=TRUE, standardized=TRUE, rsq=TRUE)
 pred1 <- predict(fit_cfa_1)
+head(pred1)
+inspect(fit_cfa_1, "cor.lv")
 
 # PROBLEM:
 # Comparative Fit Index (CFI)                    0.885       0.884
@@ -141,12 +143,15 @@ cfa_model_3 <- ' #start of model
   Security =~ Q30 + Q31
   Privacy =~ Q32 + Q33 + Q34
   Trust =~ Q29 + Q35 + Q36 + Q37
-# regressions
-  SocInf ~ Trust
-  Security ~ Privacy
-  Trust ~ Privacy + Security
-  PerfExp ~ SocInf + EffExp + Privacy + Trust
-  IntUse ~ PerfExp + SocInf + FacCond + Security
+# regressions > 0.50
+  EffExp ~ PerfExp
+  SocInf ~ PerfExp + EffExp
+  FacCond ~ PerfExp + EffExp + SocInf
+  IntUse ~ PerfExp + EffExp + SocInf + FacCond
+  Attitude ~ PerfExp + EffExp + SocInf + FacCond + IntUse
+  Security ~ PerfExp + EffExp + SocInf + FacCond + IntUse + Attitude
+  Privacy ~ SocInf
+  Trust ~ PerfExp + EffExp + SocInf + FacCond + IntUse + Attitude
 ' #end of model
 
 fit_cfa_3 <- cfa(cfa_model_3, data=mydata)
@@ -155,28 +160,83 @@ semPlot::semPaths(fit_cfa_3,"std", fade = F, residuals = F)
 
 graph_sem(model = fit_cfa_3)
 
+# By analyzing the cfa of cfa_model_3
 cfa_model_4 <- ' #start of model
 # latent variable definitions (common factors)
-  ImpactCV =~ Q2+Q3+Q4+Q10
-  SafetyCV =~ Q5+Q6+Q7+Q8+Q9
-  PerfExp =~ Q11+Q12
-  EffExp =~ Q13+Q14
-  SocInf =~ Q15+Q16
-  FacCond =~ Q17+Q18
-  IntUse =~ Q19+Q20
-  Security =~ Q21+Q22+Q23
-  Privacy =~ Q24+Q25
-  Trust =~ Q26+Q27
-# regressions
+  PerfExp =~ Q10 + Q11 + Q12
+  EffExp =~ Q13 + Q14 + Q15
+  SocInf =~ Q16 + Q17 + Q18
+  FacCond =~ Q19 + Q20 + Q21
+  IntUse =~ Q22 + Q23 + Q24
+  Attitude =~ Q26 + Q27 + Q28
+  Security =~ Q30 + Q31
+  Privacy =~ Q32 + Q33 + Q34
+  Trust =~ Q29 + Q35 + Q36 + Q37
+# regressions -> delete negatives
 # F
-  SafetyCV ~ ImpactCV
-  SocInf ~ Trust
-  Security ~ Privacy
-  Trust ~ ImpactCV + Privacy + Security
-  PerfExp ~ SocInf + EffExp + Trust
-  IntUse ~ PerfExp + SafetyCV + FacCond + Security
+  EffExp ~ PerfExp
+  SocInf ~ PerfExp + EffExp
+  FacCond ~ EffExp + SocInf
+  IntUse ~ PerfExp + EffExp + SocInf + FacCond
+  Attitude ~ PerfExp + EffExp + IntUse
+  Security ~ EffExp + SocInf + FacCond + IntUse + Attitude
+  Privacy ~ SocInf
+  Trust ~ EffExp + FacCond + IntUse + Attitude
 ' #end of model
 
 fit_cfa_4 <- cfa(cfa_model_4 , data=mydata)
 summary(fit_cfa_4, fit.measures=TRUE, standardized=TRUE)
 semPlot::semPaths(fit_cfa_4,"std", fade = F, residuals = F)
+
+# By analyzing the semPlot of fit_cfa_3
+cfa_model_5 <- ' #start of model
+# latent variable definitions (common factors)
+  PerfExp =~ Q10 + Q11 + Q12
+  EffExp =~ Q13 + Q14 + Q15
+  SocInf =~ Q16 + Q17 + Q18
+  FacCond =~ Q19 + Q20 + Q21
+  IntUse =~ Q22 + Q23 + Q24
+  Attitude =~ Q26 + Q27 + Q28
+  Security =~ Q30 + Q31
+  Privacy =~ Q32 + Q33 + Q34
+  Trust =~ Q29 + Q35 + Q36 + Q37
+# regressions -> delete < 0.50
+# F
+  EffExp ~ PerfExp
+  FacCond ~ SocInf
+  IntUse ~ EffExp
+  Security ~ Attitude
+  Trust ~ Attitude
+' #end of model
+
+fit_cfa_5 <- cfa(cfa_model_5 , data=mydata)
+summary(fit_cfa_5, fit.measures=TRUE, standardized=TRUE)
+semPlot::semPaths(fit_cfa_5,"std", fade = F, residuals = F)
+
+# By analyzing the semPlot of fit_cfa_3
+cfa_model_6 <- ' #start of model
+# latent variable definitions (common factors)
+  PerfExp =~ Q10 + Q11 + Q12
+  EffExp =~ Q13 + Q14 + Q15
+  SocInf =~ Q16 + Q17 + Q18
+  FacCond =~ Q19 + Q20 + Q21
+  IntUse =~ Q22 + Q23 + Q24
+  Attitude =~ Q26 + Q27 + Q28
+  Security =~ Q30 + Q31
+  Privacy =~ Q32 + Q33 + Q34
+  Trust =~ Q29 + Q35 + Q36 + Q37
+# regressions -> delete < 0.05
+# F
+  EffExp ~ PerfExp
+  SocInf ~ PerfExp + EffExp
+  FacCond ~ EffExp + SocInf
+  IntUse ~ EffExp + FacCond + SocInf + FacCond
+  Attitude ~ EffExp + IntUse
+  Security ~ FacCond + EffExp + FacCond + Attitude
+  Privacy ~ SocInf
+  Trust ~ Attitude + Security
+' #end of model
+
+fit_cfa_6 <- cfa(cfa_model_6 , data=mydata)
+summary(fit_cfa_6, fit.measures=TRUE, standardized=TRUE)
+semPlot::semPaths(fit_cfa_6,"std", fade = F, residuals = F)
