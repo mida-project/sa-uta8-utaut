@@ -157,6 +157,7 @@ cfa_model_3 <- ' #start of model
 fit_cfa_3 <- cfa(cfa_model_3, data=mydata)
 summary(fit_cfa_3, fit.measures=TRUE, standardized=TRUE)
 semPlot::semPaths(fit_cfa_3,"std", fade = F, residuals = F)
+fitMeasures(fit_cfa_3)
 
 graph_sem(model = fit_cfa_3)
 
@@ -240,3 +241,4 @@ cfa_model_6 <- ' #start of model
 fit_cfa_6 <- cfa(cfa_model_6 , data=mydata)
 summary(fit_cfa_6, fit.measures=TRUE, standardized=TRUE)
 semPlot::semPaths(fit_cfa_6,"std", fade = F, residuals = F)
+fitMeasures(fit_cfa_6)
