@@ -144,14 +144,11 @@ cfa_model_3 <- ' #start of model
   Privacy =~ Q32 + Q33 + Q34
   Trust =~ Q29 + Q35 + Q36 + Q37
 # regressions > 0.50
-  EffExp ~ PerfExp
-  SocInf ~ PerfExp + EffExp
-  FacCond ~ PerfExp + EffExp + SocInf
-  IntUse ~ PerfExp + EffExp + SocInf + FacCond
-  Attitude ~ PerfExp + EffExp + SocInf + FacCond + IntUse
-  Security ~ PerfExp + EffExp + SocInf + FacCond + IntUse + Attitude
-  Privacy ~ SocInf
-  Trust ~ PerfExp + EffExp + SocInf + FacCond + IntUse + Attitude
+  SocInf ~ Trust
+  Security ~ Privacy
+  Trust ~ Privacy + Security
+  PerfExp ~ SocInf + EffExp + Privacy + Trust
+  IntUse ~ PerfExp + SocInf + FacCond + Security
 ' #end of model
 
 fit_cfa_3 <- cfa(cfa_model_3, data=mydata)
