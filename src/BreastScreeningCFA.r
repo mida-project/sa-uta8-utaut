@@ -50,19 +50,15 @@ print(model1)
 # CFI, TLI > 0.90
 # RMSA, SRMR < 0.08
 
-# TODO
-# Factors from literature = 10
+# Factors from literature = 7
 cfa_model_0 <- ' #start of model
 # latent variable definitions (common factors)
-  Impact =~ Q10
   PerfExp =~ Q10 + Q11 + Q12
   EffExp =~ Q13 + Q14 + Q15
   SocInf =~ Q16 + Q17 + Q18
   FacCond =~ Q19 + Q20 + Q21
-  IntUse =~ Q22 + Q23 + Q24 + Q25
-  Attitude =~ Q26 + Q27 + Q28
-  Security =~ Q30 + Q31
-  Privacy =~ Q32 + Q33 + Q34
+  IntUse =~ Q22 + Q23 + Q24 + Q25 + Q26 + Q27 + Q28
+  Risk =~ Q30 + Q31 + Q32 + Q33 + Q34
   Trust =~ Q29 + Q35 + Q36 + Q37
 ' #end of model
 
