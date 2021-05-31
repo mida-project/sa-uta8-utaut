@@ -172,14 +172,11 @@ cfa_model_4 <- ' #start of model
   Trust =~ Q29 + Q35 + Q36 + Q37
 # regressions -> delete negatives
 # F
-  EffExp ~ PerfExp
-  SocInf ~ PerfExp + EffExp
-  FacCond ~ EffExp + SocInf
-  IntUse ~ PerfExp + EffExp + SocInf + FacCond
-  Attitude ~ PerfExp + EffExp + IntUse
-  Security ~ EffExp + SocInf + FacCond + IntUse + Attitude
-  Privacy ~ SocInf
-  Trust ~ EffExp + FacCond + IntUse + Attitude
+  SocInf ~ Trust
+  Security ~ Privacy
+  Trust ~ Privacy + Security
+  PerfExp ~ SocInf + EffExp + Trust
+  IntUse ~ PerfExp + FacCond + Security
 ' #end of model
 
 fit_cfa_4 <- cfa(cfa_model_4 , data=mydata)
@@ -194,24 +191,23 @@ cfa_model_5 <- ' #start of model
   SocInf =~ Q16 + Q17 + Q18
   FacCond =~ Q19 + Q20 + Q21
   IntUse =~ Q22 + Q23 + Q24
-  Attitude =~ Q26 + Q27 + Q28
   Security =~ Q30 + Q31
   Privacy =~ Q32 + Q33 + Q34
   Trust =~ Q29 + Q35 + Q36 + Q37
 # regressions -> delete < 0.50
 # F
-  EffExp ~ PerfExp
-  FacCond ~ SocInf
-  IntUse ~ EffExp
-  Security ~ Attitude
-  Trust ~ Attitude
+  SocInf ~ Trust
+  Security ~ Privacy
+  Trust ~ Privacy + Security
+  PerfExp ~ SocInf + EffExp + Trust
+  IntUse ~ PerfExp + FacCond + Security
 ' #end of model
 
 fit_cfa_5 <- cfa(cfa_model_5 , data=mydata)
 summary(fit_cfa_5, fit.measures=TRUE, standardized=TRUE)
 semPlot::semPaths(fit_cfa_5,"std", fade = F, residuals = F)
 
-# By analyzing the semPlot of fit_cfa_3
+# By analyzing the semPlot of fit_cfa_5
 cfa_model_6 <- ' #start of model
 # latent variable definitions (common factors)
   PerfExp =~ Q10 + Q11 + Q12
@@ -219,20 +215,16 @@ cfa_model_6 <- ' #start of model
   SocInf =~ Q16 + Q17 + Q18
   FacCond =~ Q19 + Q20 + Q21
   IntUse =~ Q22 + Q23 + Q24
-  Attitude =~ Q26 + Q27 + Q28
   Security =~ Q30 + Q31
   Privacy =~ Q32 + Q33 + Q34
   Trust =~ Q29 + Q35 + Q36 + Q37
 # regressions -> delete < 0.05
 # F
-  EffExp ~ PerfExp
-  SocInf ~ PerfExp + EffExp
-  FacCond ~ EffExp + SocInf
-  IntUse ~ EffExp + FacCond + SocInf + FacCond
-  Attitude ~ EffExp + IntUse
-  Security ~ FacCond + EffExp + FacCond + Attitude
-  Privacy ~ SocInf
-  Trust ~ Attitude + Security
+  SocInf ~ Trust
+  Security ~ Privacy
+  Trust ~ Security
+  PerfExp ~ SocInf + EffExp + Trust
+  IntUse ~ PerfExp + FacCond + Security
 ' #end of model
 
 fit_cfa_6 <- cfa(cfa_model_6 , data=mydata)
