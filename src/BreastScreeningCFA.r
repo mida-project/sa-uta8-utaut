@@ -6,7 +6,7 @@ library(psych)
 library(tidySEM)
 
 #Read Data
-SimplePre <- read_excel("~/Git/sa-uta8-utaut/data/simple_200.xlsx")
+SimplePre <- read_excel("~/Git/sa-uta8-utaut/data/simple_50.xlsx")
 mydata <- SimplePre[c(10,11,12,13,
                       14,15,16,17,
                       18,19,20,21,
@@ -62,10 +62,10 @@ cfa_model_0 <- ' #start of model
   Trust =~ Q29 + Q35 + Q36 + Q37
 ' #end of model
 
-# FAIL: could not compute...
 fit_cfa_0 <- cfa(cfa_model_0, data=mydata, estimator="ML", mimic="Mplus")
 summary(fit_cfa_0, fit.measures=TRUE, standardized=TRUE)
 pred0 <- predict(fit_cfa_0)
+fitMeasures(fit_cfa_0)
 
 # Factors from literature = 9
 cfa_model_1 <- ' #start of model
@@ -86,6 +86,7 @@ summary(fit_cfa_1, fit.measures=TRUE, standardized=TRUE, rsq=TRUE)
 pred1 <- predict(fit_cfa_1)
 head(pred1)
 inspect(fit_cfa_1, "cor.lv")
+fitMeasures(fit_cfa_1)
 
 # PROBLEM:
 # Comparative Fit Index (CFI)                    0.885       0.884
@@ -118,6 +119,7 @@ cfa_model_2 <- ' #start of model
 fit_cfa_2 <- cfa(cfa_model_2, data=mydata, estimator="MLR", mimic="Mplus")
 summary(fit_cfa_2, fit.measures=TRUE, standardized=TRUE)
 pred2 <- predict(fit_cfa_2)
+fitMeasures(fit_cfa_2)
 
 # PROBLEM:
 # Comparative Fit Index (CFI)                    0.838       0.830
