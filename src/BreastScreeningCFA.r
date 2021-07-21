@@ -6,7 +6,7 @@ library(psych)
 library(tidySEM)
 
 #Read Data
-SimplePre <- read_excel("~/Git/sa-uta8-utaut/data/simple_281.xlsx")
+SimplePre <- read_excel("~/Git/sa-uta8-utaut/data/simple_300.xlsx")
 mydata <- SimplePre[c(10,11,12,13,
                       14,15,16,17,
                       18,19,20,21,
