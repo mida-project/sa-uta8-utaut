@@ -9,35 +9,42 @@ library(likert)
 library(nFactors)
 
 # Plot the likert dataset
-RadiomicsLikert <- read_excel("Documents/Orientação/Francisco/Radiomics.xlsx")
-names(RadiomicsLikert)<-c("Q01","Q02","Q03","Q04","Q05","Q06","Q07","Q08","Q09","Q10","Q11","Q12","Q13","Q14","Q15","Q16","Q17","Q18","Q19","Q20","Q21","Q22","Q23","Q24","Q25","Q26","Q27","Q28","Q29","Q30","Q31","Q32","Q33","Q34","Q35","Q36","Q37")
+RadiomicsLikert <- read_excel("../data/Radiomics.xlsx")
+names(RadiomicsLikert)<-c("Q01","Q02","Q03","Q04","Q05",
+                          "Q06","Q07","Q08","Q09","Q10",
+                          "Q11","Q12","Q13","Q14","Q15",
+                          "Q16","Q17","Q18","Q19","Q20",
+                          "Q21","Q22","Q23","Q24","Q25",
+                          "Q26","Q27","Q28","Q29","Q30",
+                          "Q31","Q32","Q33","Q34","Q35",
+                          "Q36","Q37")
 mydata.likert <- likert(as.data.frame(lapply(RadiomicsLikert,as.factor)))
 
 summary(mydata.likert)
 plot(mydata.likert, ordered=FALSE, order=names(mydata.likert))
 
 #Check the data
-pairs.panels(mydata)
-corPlot(mydata)
+pairs.panels(RadiomicsLikert)
+corPlot(RadiomicsLikert)
 
 #Calculate the correlation matrix
-corMat <- cor(mydata)
+corMat <- cor(RadiomicsLikert)
 print(corMat)
 
 # Pricipal Components Analysis
 # entering raw data and extracting PCs 
 # from the correlation matrix 
-fit_PCA <- princomp(mydata, cor=TRUE)
-summary(fit_PCA) # print variance accounted for 
-loadings(fit_PCA) # pc loadings 
-plot(fit_PCA,type="lines") # scree plot 
+fit_PCA <- princomp(RadiomicsLikert, cor=TRUE)
+summary(fit_PCA) # print variance accounted for
+loadings(fit_PCA) # pc loadings
+plot(fit_PCA,type="lines") # scree plot
 fit_PCA$scores # the principal components
 biplot(fit_PCA)
 print(fit_PCA, digits=2, cutoff=.4)
 
 # Determine Number of Factors to Extract
-ev <- eigen(cor(mydata)) # get eigenvalues
-ap <- parallel(subject=nrow(mydata),var=ncol(mydata),
+ev <- eigen(cor(RadiomicsLikert)) # get eigenvalues
+ap <- parallel(subject=nrow(RadiomicsLikert),var=ncol(RadiomicsLikert),
                rep=100,cent=.05)
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
@@ -45,16 +52,17 @@ plotnScree(nS)
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 8 factors, 
 # with varimax rotation 
-fit_ML <- factanal(mydata, 8, fm = "ml", rotation="varimax", scores="regression")
+fit_ML <- factanal(RadiomicsLikert, 8, fm = "ml", rotation="varimax", scores="regression")
 print(fit_ML, digits=2, cutoff=.4)
 
 
 #Visualize results
-loadings <- fit_ML$loadings[,1:8] 
+loadings <- fit_ML$loadings[,1:8]
 
 loadings.m <- melt(loadings, id="", 
-                   measure=c("Factor 1", "Factor 2", "Factor 3", 
-                             "Factor 4", "Factor 5", "Factor 6", "Factor 7", "Factor 8"), 
+                   measure=c("Factor 1", "Factor 2", "Factor 3",
+                             "Factor 4", "Factor 5", "Factor 6",
+                             "Factor 7", "Factor 8"),
                    variable.name="Factor", value.name="Loading")
 
 colnames(loadings.m)[1] <- "Test"
@@ -67,7 +75,7 @@ ggplot(loadings.m, aes(Test, abs(Loading), fill=Loading)) +
   #define the fill color gradient: blue=positive, red=negative
   scale_fill_gradient2(name = "Loading", 
                        high = "blue", mid = "white", low = "red", 
-                       midpoint=0, guide=F) +
+                       midpoint=0, guide="none") +
   ylab("Loading Strength") + #improve y-axis label
   theme_bw(base_size=10) #use a black-and-white theme with set font size
 
@@ -93,7 +101,7 @@ p1 <- ggplot(corrs.m, aes(Test2, Test, fill=abs(Correlation))) +
         plot.margin = unit(c(3, 1, 0, 0), "mm")) +
   #set correlation fill gradient
   scale_fill_gradient(low="white", high="red") + 
-  guides(fill=F) #omit unnecessary gradient legend
+  guides(fill="none") #omit unnecessary gradient legend
 
 p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) + 
   geom_bar(stat="identity") + coord_flip() + 
@@ -106,7 +114,6 @@ grid.arrange(p1, p2, ncol=2, widths=c(2, 1)) #side-by-side, matrix gets more spa
 
 
 #Read Data
-MadeiraSafeAgo <- read_excel("Documents/Projectos/MadeiraSafe/MadeiraSafeAgo.xlsx")
 mydata <- RadiomicsLikert
 
 cfa_model <- ' #start of model
