@@ -163,7 +163,7 @@ loadMatrix[loadMatrix==0] <- NA
 # Calculate mean squared loadings (i.e. AVEs)
 apply(loadMatrix^2,2,mean, na.rm = TRUE)
 
-htmt(fit_cfa, mydata)
+#htmt(fit_cfa, data=mydata)
 
 
 
