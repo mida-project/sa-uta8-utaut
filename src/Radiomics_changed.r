@@ -7,6 +7,7 @@ library(metaSEM)
 library(dplyr)
 library(likert)
 library(nFactors)
+library(reshape)
 
 # Plot the likert dataset
 RadiomicsLikert <- read_excel("../data/Radiomics.xlsx")
@@ -147,7 +148,7 @@ reliability(fit_cfa)
 #Compute Discriminant Validity
 htmt(cfa_model, data=mydata)
 #Compute fit measures
-fitMeasures(fit_cfa, c("chisq", "df", "pvalue", "cfi", "nfi", "agfi", "tli", "rmsea", "srmr"),
+fitMeasures(fit_cfa, c("chisq", "df", "pvalue", "cfi", "nfi", "gfi", "agfi", "tli", "rmsea", "srmr"),
             output = "text")
 discriminantValidity(fit_cfa, cutoff = 0.9, merge = FALSE, level = 0.95)
 
