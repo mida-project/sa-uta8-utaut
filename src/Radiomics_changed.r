@@ -10,7 +10,7 @@ library(nFactors)
 library(reshape)
 
 # Plot the likert dataset
-RadiomicsLikert <- read_excel("../data/Radiomics.xlsx")
+RadiomicsLikert <- read_excel("../data/Radiomics_changed.xlsx")
 names(RadiomicsLikert)<-c("Q01","Q02","Q03","Q04","Q05",
                           "Q06","Q07","Q08","Q09","Q10",
                           "Q11","Q12","Q13","Q14","Q15",
@@ -148,7 +148,7 @@ reliability(fit_cfa)
 #Compute Discriminant Validity
 htmt(cfa_model, data=mydata)
 #Compute fit measures
-fitMeasures(fit_cfa, c("chisq", "df", "pvalue", "cfi", "nfi", "gfi", "agfi", "tli", "rmsea", "srmr"),
+fitMeasures(fit_cfa, c("cn_01", "chisq", "df", "pvalue", "cfi", "nfi", "gfi", "agfi", "tli", "rmsea", "srmr"),
             output = "text")
 discriminantValidity(fit_cfa, cutoff = 0.9, merge = FALSE, level = 0.95)
 
