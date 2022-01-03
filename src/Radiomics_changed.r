@@ -45,15 +45,21 @@ print(fit_PCA, digits=2, cutoff=.4)
 
 # Determine Number of Factors to Extract
 ev <- eigen(cor(RadiomicsLikert)) # get eigenvalues
-ap <- parallel(subject=nrow(RadiomicsLikert),var=ncol(RadiomicsLikert),
-               rep=100,cent=.05)
+ap <- parallel(subject=nrow(RadiomicsLikert),
+               var=ncol(RadiomicsLikert),
+               rep=100,
+               cent=.05)
 nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
 plotnScree(nS)
 
 # Maximum Likelihood Factor Analysis
 # entering raw data and extracting 8 factors, 
 # with varimax rotation 
-fit_ML <- factanal(RadiomicsLikert, 8, fm = "ml", rotation="varimax", scores="regression")
+fit_ML <- factanal(RadiomicsLikert,
+                   8,
+                   fm = "ml",
+                   rotation="varimax",
+                   scores="regression")
 print(fit_ML, digits=2, cutoff=.4)
 
 
@@ -82,7 +88,10 @@ ggplot(loadings.m, aes(Test, abs(Loading), fill=Loading)) +
   theme_bw(base_size=10) #use a black-and-white theme with set font size
 
 corrs <- fit_ML$correlation
-corrs.m <- melt(corrs, id="Test", variable.name="Test2", value.name="Correlation")
+corrs.m <- melt(corrs,
+                id="Test",
+                variable.name="Test2",
+                value.name="Correlation")
 
 colnames(corrs.m)[1] <- "Test"
 colnames(corrs.m)[2] <- "Test2"
@@ -108,11 +117,13 @@ p1 <- ggplot(corrs.m, aes(Test2, Test, fill=abs(Correlation))) +
 p2 <- ggplot(loadings.m, aes(Test, abs(Loading), fill=Factor)) + 
   geom_bar(stat="identity") + coord_flip() + 
   ylab("Loading Strength") + theme_bw(base_size=10) + 
-  #remove labels and tweak margins for combining with the correlation matrix plot
+  #remove labels and tweak margins for combining with the
+  #correlation matrix plot
   theme(axis.text.y = element_blank(), 
         axis.title.y = element_blank(), 
         plot.margin = unit(c(3,1,39,-3), "mm"))
-grid.arrange(p1, p2, ncol=2, widths=c(2, 1)) #side-by-side, matrix gets more space
+#side-by-side, matrix gets more space
+grid.arrange(p1, p2, ncol=2, widths=c(2, 1))
 
 
 #Read Data
@@ -149,7 +160,17 @@ reliability(fit_cfa)
 #Compute Discriminant Validity
 htmt(cfa_model, data=mydata)
 #Compute fit measures
-fitMeasures(fit_cfa, c("cn_01", "chisq", "df", "pvalue", "cfi", "nfi", "gfi", "agfi", "tli", "rmsea", "srmr"),
+fitMeasures(fit_cfa, c("cn_01",
+                       "chisq",
+                       "df",
+                       "pvalue",
+                       "cfi",
+                       "nfi",
+                       "gfi",
+                       "agfi",
+                       "tli",
+                       "rmsea",
+                       "srmr"),
             output = "text")
 discriminantValidity(fit_cfa, cutoff = 0.9, merge = FALSE, level = 0.95)
 
