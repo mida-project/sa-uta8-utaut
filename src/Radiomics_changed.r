@@ -66,7 +66,8 @@ print(fit_ML, digits=2, cutoff=.4)
 #Visualize results
 loadings <- fit_ML$loadings[,1:8]
 
-loadings.m <- melt(loadings, id="", 
+loadings.m <- melt(loadings,
+                   id="Main",
                    measure=c("Factor 1", "Factor 2", "Factor 3",
                              "Factor 4", "Factor 5", "Factor 6",
                              "Factor 7", "Factor 8"),
@@ -76,7 +77,7 @@ loadings.m <- melt(loadings, id="",
 colnames(loadings.m)[1] <- "Test"
 colnames(loadings.m)[2] <- "Factor"
 
-ggplot(loadings.m, aes(Test, abs(Loading), fill=Loading)) + 
+ggplot(loadings.m, aes(Test, abs(loadings), fill=loadings)) + 
   facet_wrap(~ Factor, nrow=1) + #place the factors in separate facets
   geom_bar(stat="identity") + #make the bars
   coord_flip() + #flip the axes so the test names can be horizontal  
@@ -129,9 +130,13 @@ grid.arrange(p1, p2, ncol=2, widths=c(2, 1))
 #Read Data
 mydata <- RadiomicsLikert
 
+#Calculate the correlation matrix
+corMat <- cor(mydata)
+print(corMat)
+
 cfa_model <- ' #start of model
 # latent variable definitions (common factors)
-  AdoptAISys =~ Q05+Q06+Q08+Q09
+  Guidance =~ Q05+Q06+Q08+Q09
   PerfExp =~ Q10+Q11+Q12
   EffExp =~ Q13+Q14+Q15
   SocInf =~ Q16+Q17+Q18
@@ -141,16 +146,12 @@ cfa_model <- ' #start of model
   Privacy =~ Q32+Q33+Q34
   Trust =~ Q35+Q36+Q37
 # regressions
-  Security ~ Privacy + SocInf + AdoptAISys
-  Trust ~  AdoptAISys + Privacy + Security
+  Security ~ Privacy + SocInf + Guidance
+  Trust ~  Guidance + Privacy + Security
   EffExp ~ SocInf + FacCond + Trust
   PerfExp ~ SocInf + EffExp + Privacy + Trust
-  IntUse ~ PerfExp + FacCond + Security + AdoptAISys
+  IntUse ~ PerfExp + FacCond + Security + Guidance
 ' #end of model
-
-#Calculate the correlation matrix
-corMat <- cor(mydata)
-print(corMat)
 
 #Performan CFA
 fit_cfa <- cfa(cfa_model, data=mydata)
@@ -193,4 +194,70 @@ apply(loadMatrix^2,2,mean, na.rm = TRUE)
 miPowerFit(fit_cfa, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
            intcept = 0.2, stdDelta = NULL, delta = NULL, cilevel = 0.9)
 
-calEffSizes(model=cfa_model, n=mydata.n, Cov=mydata.cor, lavaan.output=FALSE)
+calEffSizes(model=cfa_model, n=mydata.n,
+            Cov=mydata.cor, lavaan.output=FALSE)
+
+cfa_model_new <- ' #start of model
+# latent variable definitions (common factors)
+  Impact =~ Q02+Q04
+  Guidance =~ Q05+Q06+Q08+Q09
+  PerfExp =~ Q10+Q11+Q12
+  EffExp =~ Q13+Q14+Q15
+  SocInf =~ Q16+Q17+Q18
+  FacCond =~ Q19+Q20+Q21
+  IntUse =~ Q22+Q23+Q24+Q25
+  Security =~ Q29+Q30+Q31
+  Privacy =~ Q32+Q33+Q34
+  Trust =~ Q35+Q36+Q37
+# regressions
+  Guidance ~ Impact
+  Security ~ Privacy + SocInf + Guidance
+  Trust ~  Impact + Privacy + Security
+  EffExp ~ SocInf + FacCond + Trust
+  PerfExp ~ SocInf + EffExp + Privacy + Trust
+  IntUse ~ PerfExp + FacCond + Security + Guidance
+' #end of model
+
+#Performan CFA
+fit_cfa_new <- cfa(cfa_model_new, data=mydata)
+summary(fit_cfa_new, fit.measures=TRUE, standardized=TRUE)
+#Compute relability
+reliability(fit_cfa_new)
+#Compute Discriminant Validity
+htmt(cfa_model_new, data=mydata)
+#Compute fit measures
+fitMeasures(fit_cfa_new, c("cn_01",
+                       "chisq",
+                       "df",
+                       "pvalue",
+                       "cfi",
+                       "nfi",
+                       "gfi",
+                       "agfi",
+                       "tli",
+                       "rmsea",
+                       "srmr"),
+            output = "text")
+discriminantValidity(fit_cfa_new, cutoff = 0.9, merge = FALSE, level = 0.95)
+
+inspect(fit_cfa_new, "rsquare" )
+inspect(fit_cfa_new, "cor.lv")
+
+# Extract the standardized loading matrix
+loadMatrix_new <- inspect(fit_cfa_new, "std")$lambda
+
+# Clear the zero loadings
+loadMatrix_new[loadMatrix_new==0] <- NA
+
+# Calculate mean squared loadings (i.e. AVEs)
+apply(loadMatrix_new^2,2,mean, na.rm = TRUE)
+
+#htmt(fit_cfa, data=mydata)
+
+
+
+miPowerFit(fit_cfa_new, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
+           intcept = 0.2, stdDelta = NULL, delta = NULL, cilevel = 0.9)
+
+calEffSizes(model=cfa_model_new, n=mydata.n,
+            Cov=mydata.cor, lavaan.output=FALSE)
