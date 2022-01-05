@@ -175,7 +175,7 @@ fitMeasures(fit_cfa, c("cn_01",
             output = "text")
 discriminantValidity(fit_cfa, cutoff = 0.9, merge = FALSE, level = 0.95)
 
-inspect(fit_cfa, "rsquare" )
+inspect(fit_cfa, "rsquare")
 inspect(fit_cfa, "cor.lv")
 
 # Extract the standardized loading matrix
@@ -249,12 +249,10 @@ loadMatrix_new <- inspect(fit_cfa_new, "std")$lambda
 # Clear the zero loadings
 loadMatrix_new[loadMatrix_new==0] <- NA
 
-# Calculate mean squared loadings (i.e. AVEs)
+# Calculate mean squared loadings (i.e., AVEs)
 apply(loadMatrix_new^2,2,mean, na.rm = TRUE)
 
-#htmt(fit_cfa, data=mydata)
-
-
+#htmt(fit_cfa_new, data=mydata)
 
 miPowerFit(fit_cfa_new, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
            intcept = 0.2, stdDelta = NULL, delta = NULL, cilevel = 0.9)
