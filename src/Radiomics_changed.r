@@ -1,3 +1,5 @@
+#!/usr/bin/env Rscript
+
 library(readxl)
 library(lavaan)
 library(corrplot)
@@ -240,7 +242,7 @@ fitMeasures(fit_cfa_new, c("cn_01",
             output = "text")
 discriminantValidity(fit_cfa_new, cutoff = 0.9, merge = FALSE, level = 0.95)
 
-inspect(fit_cfa_new, "rsquare" )
+inspect(fit_cfa_new, "rsquare")
 inspect(fit_cfa_new, "cor.lv")
 
 # Extract the standardized loading matrix
@@ -257,5 +259,5 @@ apply(loadMatrix_new^2,2,mean, na.rm = TRUE)
 miPowerFit(fit_cfa_new, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
            intcept = 0.2, stdDelta = NULL, delta = NULL, cilevel = 0.9)
 
-calEffSizes(model=cfa_model_new, n=mydata.n,
-            Cov=mydata.cor, lavaan.output=FALSE)
+#calEffSizes(model=cfa_model_new, n=mydata.n,
+#            Cov=mydata.cor, lavaan.output=FALSE)
