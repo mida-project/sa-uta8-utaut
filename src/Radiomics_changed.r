@@ -196,7 +196,7 @@ apply(loadMatrix^2,2,mean, na.rm = TRUE)
 miPowerFit(fit_cfa, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
            intcept = 0.2, stdDelta = NULL, delta = NULL, cilevel = 0.9)
 
-calEffSizes(model=cfa_model, n=mydata.n,
+calEffSizes(model=cfa_model_mods, n=mydata.n,
             Cov=mydata.cor, lavaan.output=FALSE)
 
 cfa_model_new <- ' #start of model
@@ -261,3 +261,7 @@ miPowerFit(fit_cfa_new, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
 
 #calEffSizes(model=cfa_model_new, n=mydata.n,
 #            Cov=mydata.cor, lavaan.output=FALSE)
+
+######################################################
+######################################################
+######################################################
