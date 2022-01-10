@@ -57,19 +57,19 @@ miPowerFit(fit_cfa_mods, stdLoad = 0.4, cor = 0.1, stdBeta = 0.1,
 
 #Group by Gender
 fit_cfa_gender_1 <- cfa(cfa_model_mods,
-                        data=moddata,
-                        group="gender")
+                        data = moddata,
+                        group = "gender")
 fit_cfa_gender_2 <- cfa(cfa_model_mods,
-                        data=moddata,
-                        group="gender",
+                        data = moddata,
+                        group = "gender",
                         group.equal = "loadings")
 fit_cfa_gender_3 <- cfa(cfa_model_mods,
-                        data=moddata,
-                        group="gender",
+                        data = moddata,
+                        group = "gender",
                         group.equal = c("intercepts", "loadings"))
 lavTestLRT(fit_cfa_gender_1, fit_cfa_gender_2, fit_cfa_gender_3)
-summary(fit_cfa_gender_1, fit.measures=TRUE, standardized=TRUE)
-measurementInvariance(model=cfa_model_mods,data=moddata, group="gender")
+summary(fit_cfa_gender_1, fit.measures = TRUE, standardized = TRUE)
+measurementInvariance(model = cfa_model_mods,data = moddata, group = "gender")
 
 #Group by Age
 fit_cfa_age_1 <- cfa(cfa_model_mods,
@@ -125,16 +125,16 @@ fitMeasures(fit_cfa_age_3, c("chisq",
 #Group by Nationality
 fit_cfa_nat_1 <- cfa(cfa_model_mods,
                      data=moddata,
-                     estimator = "WLSMV",
+                     estimator="WLSMV",
                      group="nationality")
 fit_cfa_nat_2 <- cfa(cfa_model_mods,
                      data=moddata,
-                     estimator = "WLSMV",
+                     estimator="WLSMV",
                      group="nationality",
-                     group.equal = "loadings")
+                     group.equal="loadings")
 fit_cfa_nat_3 <- cfa(cfa_model_mods,
                      data=moddata,
-                     estimator = "WLSMV",
+                     estimator="WLSMV",
                      group="nationality",
                      group.equal = c("intercepts", "loadings"))
 lavTestLRT(fit_cfa_nat_1, fit_cfa_nat_2, fit_cfa_nat_3)
@@ -174,6 +174,56 @@ fitMeasures(fit_cfa_nat_3, c("chisq",
                              "tli",
                              "rmsea",
                              "srmr"),
+            output = "text")
+
+#Group by Education
+fit_cfa_edu_1 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group = "education")
+fit_cfa_edu_2 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group = "education",
+                     group.equal = "loadings")
+fit_cfa_edu_3 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group="education",
+                     group.equal = c("intercepts", "loadings"))
+lavTestLRT(fit_cfa_edu_1, fit_cfa_edu_2, fit_cfa_edu_3)
+
+summary(fit_cfa_edu_1, fit.measures=TRUE, standardized=TRUE)
+measurementInvariance(model = cfa_model_mods,
+                      data = moddata,
+                      group = "education")
+
+fitMeasures(fit_cfa_edu_1,
+            c("chisq",
+              "df",
+              "pvalue",
+              "cfi",
+              "tli",
+              "rmsea",
+              "srmr"),
+            output = "text")
+fitMeasures(fit_cfa_edu_2,
+            c("chisq",
+              "df",
+              "pvalue",
+              "cfi",
+              "tli",
+              "rmsea",
+              "srmr"),
+            output = "text")
+fitMeasures(fit_cfa_edu_3,
+            c("chisq",
+              "df",
+              "pvalue",
+              "cfi",
+              "tli",
+              "rmsea",
+              "srmr"),
             output = "text")
 
 ######################################################
