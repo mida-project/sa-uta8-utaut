@@ -46,22 +46,6 @@ cfa_model_mods <- ' #start of model
   Trust ~~ Trust
 ' #end of model
 
-fit_cfa_model_mods <- sem(cfa_model_mods, data=moddata, std.lv=TRUE)
-summary(fit_cfa_model_mods,
-        fit.measures=TRUE,
-        standardized = TRUE)
-
-# Determine Number of Factors to Extract
-ev <- eigen(cor(moddata))
-# get eigenvalues
-ev$values
-ap <- parallel(subject=nrow(moddata),
-               var=ncol(moddata),
-               rep=100,
-               cent=.05)
-nS <- nScree(x=ev$values, aparallel=ap$eigen$qevpea)
-plotnScree(nS)
-
 fit_cfa_mods <- cfa(cfa_model_mods, data=moddata)
 summary(fit_cfa_mods, fit.measures=TRUE, standardized=TRUE)
 
