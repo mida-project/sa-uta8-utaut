@@ -226,6 +226,53 @@ fitMeasures(fit_cfa_edu_3,
               "srmr"),
             output = "text")
 
+#Group by Knowledge
+fit_cfa_knw_1 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group = "knowledge")
+fit_cfa_knw_2 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group = "Local",
+                     group.equal = "loadings")
+fit_cfa_knw_3 <- cfa(cfa_model_mods,
+                     data = moddata,
+                     estimator = "WLSMV",
+                     group = "Local",
+                     group.equal = c("intercepts", "loadings"))
+lavTestLRT(fit_cfa_knw_1, fit_cfa_knw_2, fit_cfa_knw_3)
+
+summary(fit_cfa_knw_1, fit.measures=TRUE, standardized=TRUE)
+measurementInvariance(model = cfa_model_mods,
+                      data=moddata,
+                      group = "Local")
+
+fitMeasures(fit_cfa_knw_1, c("chisq",
+                             "df",
+                             "pvalue",
+                             "cfi",
+                             "tli",
+                             "rmsea",
+                             "srmr"),
+            output = "text")
+fitMeasures(fit_cfa_knw_2, c("chisq",
+                             "df",
+                             "pvalue",
+                             "cfi",
+                             "tli",
+                             "rmsea",
+                             "srmr"),
+            output = "text")
+fitMeasures(fit_cfa_knw_3, c("chisq",
+                             "df",
+                             "pvalue",
+                             "cfi",
+                             "tli",
+                             "rmsea",
+                             "srmr"),
+            output = "text")
+
 ######################################################
 ######################################################
 ######################################################
