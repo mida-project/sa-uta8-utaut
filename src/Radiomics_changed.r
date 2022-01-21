@@ -145,13 +145,13 @@ cfa_model <- ' #start of model
   FacCond =~ Q19+Q20+Q21
   IntUse =~ Q22+Q23+Q24+Q25
   Security =~ Q29+Q30+Q31
-  Privacy =~ Q32+Q33+Q34
+  Risk =~ Q32+Q33+Q34
   Trust =~ Q35+Q36+Q37
 # regressions
-  Security ~ Privacy + SocInf + Guidance
-  Trust ~  Guidance + Privacy + Security
+  Security ~ Risk + SocInf + Guidance
+  Trust ~  Guidance + Risk + Security
   EffExp ~ SocInf + FacCond + Trust
-  PerfExp ~ SocInf + EffExp + Privacy + Trust
+  PerfExp ~ SocInf + EffExp + Risk + Trust
   IntUse ~ PerfExp + FacCond + Security + Guidance
 ' #end of model
 
@@ -209,14 +209,14 @@ cfa_model_new <- ' #start of model
   FacCond =~ Q19+Q20+Q21
   IntUse =~ Q22+Q23+Q24+Q25
   Security =~ Q29+Q30+Q31
-  Privacy =~ Q32+Q33+Q34
+  Risk =~ Q32+Q33+Q34
   Trust =~ Q35+Q36+Q37
 # regressions
   Guidance ~ Impact
-  Security ~ Privacy + SocInf + Guidance
-  Trust ~  Impact + Privacy + Security
+  Security ~ Risk + SocInf + Guidance
+  Trust ~  Impact + Risk + Security
   EffExp ~ SocInf + FacCond + Trust
-  PerfExp ~ SocInf + EffExp + Privacy + Trust
+  PerfExp ~ SocInf + EffExp + Risk + Trust
   IntUse ~ PerfExp + FacCond + Security + Guidance
 ' #end of model
 

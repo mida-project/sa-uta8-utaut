@@ -31,7 +31,7 @@ cfa_model_mods <- ' #start of model
   FacCond =~ Q19+Q20+Q21
   IntUse =~ Q22+Q23+Q24+Q25
   Security =~ Q29+Q30+Q31
-  Privacy =~ Q32+Q33+Q34
+  Risk =~ Q32+Q33+Q34
   Trust =~ Q35+Q36+Q37
 # correlated errors
   Impact ~~ Impact
@@ -42,7 +42,7 @@ cfa_model_mods <- ' #start of model
   FacCond ~~ FacCond
   IntUse ~~ IntUse
   Security ~~ Security
-  Privacy ~~ Privacy
+  Risk ~~ Risk
   Trust ~~ Trust
 ' #end of model
 
